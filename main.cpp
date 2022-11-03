@@ -43,7 +43,7 @@ int main()
     cout << "Bienvenu dans le jeu du boggle, dans ce jeu vous aurez une grille avec plusieurs lettres, votre but est de trouver des mots avec les mots à condition d'etre colle a ses derniers" <<endl;
 
     cout << "Lorsque vous cliquerez sur un bouton le jeu se lancera et vous aurez 3 minutes pour trouver le plus de mot possible" <<endl;
-//continue to the game in function of OS
+    //continue to the game in function of OS
 #ifdef __linux__
     system("read");
     system("clear");
@@ -78,43 +78,47 @@ int main()
             cout << "les mots de moins de trois lettres sont interdits" <<endl<<endl;
             cin >> tryWord;
         }
-            do{
-                //if the word is in the dictionnary
-                if(tryWord == line)
-                {
-                    switch(tryWord.length()) { //add score in function of the length of the word
-                        case 3 :
-                        score += 1;
-                        case 4 :
-                        score += 1;
-                        break;
-                        case 5:
-                        score += 2;
-                        case 6:
-                        score += 3;
-                        case 7:
-                        score += 5;
-                        case 8:
-                        score += 11;
-                        break;}
-
-                    cout << "Le mot " << tryWord << " est correct!" <<endl;
-                    cout << "Le score est de " << score << " points !" <<endl<<endl;
-                    found = 1;
-                }
-
-            }
-            while ( getline (dictionnary,line) );
-            //if the word is not in the dictionnary
-            if(found == 0)
+        do{
+            //if the word is in the dictionnary
+            if(tryWord == line)
             {
+                switch(tryWord.length()) { //add score in function of the length of the word
+                case 3 :
+                    score += 1;
+                    break;
+                case 4 :
+                    score += 1;
+                    break;
+                case 5:
+                    score += 2;
+                    break;
+                case 6:
+                    score += 3;
+                    break;
+                case 7:
+                    score += 5;
+                    break;
+                case 8:
+                    score += 11;
+                    break;}
 
-                cout << tryWord << " est un mot non valide" <<endl<<endl;
+                cout << "Le mot " << tryWord << " est correct!" <<endl;
+                cout << "Le score est de " << score << " points !" <<endl<<endl;
+                found = 1;
             }
 
-            }
+        }
+        while ( getline (dictionnary,line) );
+        //if the word is not in the dictionnary
+        if(found == 0)
+        {
 
-            cout << "jeu fini ! Vous avez " << score << " points !";
+            cout << tryWord << " est un mot non valide" <<endl<<endl;
+        }
+
+    }
+
+    cout << "jeu fini ! Vous avez " << score << " points !";
     return 0;
 }
 
