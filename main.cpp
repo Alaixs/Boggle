@@ -1,5 +1,7 @@
+//TODO : Implemnter chrono, finir avec les regles du jeu, ajouter déco si possbile, a la fin montrer le nombre de mot possible avec la configuration de la grille
 #include <iostream>
 #include <fstream>
+#include <chrono>
 #include <string>
 #include <random>
 using namespace std;
@@ -41,7 +43,7 @@ int main()
     cout << "Bienvenu dans le jeu du boggle, dans ce jeu vous aurez une grille avec plusieurs lettres, votre but est de trouver des mots avec les mots à condition d'etre colle a ses derniers" <<endl;
 
     cout << "Lorsque vous cliquerez sur un bouton le jeu se lancera et vous aurez 3 minutes pour trouver le plus de mot possible" <<endl;
-
+//continue to the game in function of OS
 #ifdef __linux__
     system("read");
     system("clear");
@@ -62,23 +64,25 @@ int main()
     }
     cout <<endl<<endl;
 
-
-    do{
-
+    //Start the game
+    for(auto runUntil = chrono::system_clock::now() + chrono::seconds(180);
+        chrono::system_clock::now() < runUntil;)
+    {
         found = 0;
         ifstream dictionnary ("dico.txt");
-
+        //Ask for a word
         cin >> tryWord;
+        //Check if the word is higher than 3 letters
         while(tryWord.length() < 3)
         {
             cout << "les mots de moins de trois lettres sont interdits" <<endl<<endl;
             cin >> tryWord;
         }
             do{
-
+                //if the word is in the dictionnary
                 if(tryWord == line)
                 {
-                    switch(tryWord.length()) {
+                    switch(tryWord.length()) { //add score in function of the length of the word
                         case 3 :
                         score += 1;
                         case 4 :
@@ -101,15 +105,16 @@ int main()
 
             }
             while ( getline (dictionnary,line) );
-
+            //if the word is not in the dictionnary
             if(found == 0)
             {
 
                 cout << tryWord << " est un mot non valide" <<endl<<endl;
             }
 
+            }
 
-    }while(1);
+            cout << "jeu fini ! Vous avez " << score << " points !";
     return 0;
 }
 
